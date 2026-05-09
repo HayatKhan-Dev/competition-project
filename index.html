@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QueueX</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar">
+        <div class="logo">QueueX</div>
+
+        <div class="nav-actions">
+          <a href="#" id="home">Home</a>
+          <a href="#" id="about">About</a>
+          <a href="#" id="contact" class="contact" target="_blank"
+            >Contact <i class="fa-solid fa-arrow-right"></i
+          ></a>
+          <div class="theme-toggle" id="themeToggle">
+            <span class="knob"
+              ><i class="fa-solid fa-moon moon"></i
+              ><i class="fa-solid fa-sun sun"></i
+            ></span>
+          </div>
+        </div>
+      </nav>
+      <section class="hero">
+        <div class="hero-container">
+          <!-- LEFT SIDE -->
+          <div class="hero-content">
+            <h1>Skip Long Lines. <span class="gradient-text">Save Time.</span></h1>
+
+            <p>
+              QueueX is a smart digital queuing system for hospitals, banks and
+              offices. Get your token online and track your position in
+              real-time.
+            </p>
+
+            <div class="hero-buttons">
+              <a href="user.html" class="btn btn-primary" target="_blank">Get Token</a>
+              <a href="admin.html" class="btn btn-secondary" target="_blank">Admin Panel</a>
+            </div>
+
+            <div class="hero-stats">
+              <div class="stat">
+                <h3>70%</h3>
+                <span>Less waiting</span>
+              </div>
+
+              <div class="stat">
+                <h3>Real-time</h3>
+                <span>Queue updates</span>
+              </div>
+
+              <div class="stat">
+                <h3>24/7</h3>
+                <span>Availability</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT SIDE -->
+          <div class="hero-preview">
+            <div class="queue-card">
+              <h2>Live Queue Preview</h2>
+
+              <div class="queue-row">
+                <span class="serving">Now Serving</span>
+                <strong>H-021</strong>
+              </div>
+
+              <div class="queue-row">
+                <span>Your Token</span>
+                <strong>H-026</strong>
+              </div>
+
+              <div class="queue-row">
+                <span>Estimated Time</span>
+                <strong>25 mins</strong>
+              </div>
+              <button class="join-btn" target="_blank">Join Queue</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </header>
+
+    <script src="script.js"></script>
+  </body>
+</html>
