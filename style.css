@@ -102,8 +102,13 @@ header {
     align-items: center;
     padding: var(--sp-4) var(--sp-7);
     background-color: var(--bg-2);
-    border: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
     box-shadow: var(--shadow-sm);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 10000;
 }
 
 .logo {
@@ -243,7 +248,7 @@ body.light .theme-toggle .sun {
 
 .hero-container {
   max-width: 1200px;
-  margin: auto;
+  margin: var(--sp-8) auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -387,9 +392,65 @@ body.light .theme-toggle .sun {
 }
 
 /* Header & Hero Responsiveness */
-/* ===============================
-   Responsive Variables (Mobile)
-   =============================== */
+
+/* Responsive Navbar for mobile phones */
+.menu-btn {
+  display: none;
+  cursor: pointer;
+}
+
+.mobile-menu {
+  width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: var(--sp-4);
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  padding: var(--sp-4);
+  position: absolute;
+  top: 70px;
+  right: var(--sp-5);
+  border-radius: var(--radius-md);
+  opacity: 0;
+  transform: translateY(-15px) scale(0.95);
+  pointer-events: none;
+  z-index: 100000;
+  transition: 0.3s ease;
+}
+
+.mobile-menu a {
+  border-bottom: 2px solid var(--muted-border);
+  transition: var(--transition-mid);
+}
+
+.mobile-menu a:active {
+  border-bottom: 2px solid var(--border);
+}
+
+.glow {
+  position: absolute;
+  border-radius: 50%;
+  width: 300px;
+  height: 300px;
+  background: var(--brand-gradient);
+  filter: blur(120px);
+  z-index: -10;
+  opacity: 0.6;
+}
+
+.glow-1 {
+  top: -100px;
+  left: -100px;
+}
+
+.glow-2 {
+  bottom: -100px;
+  right: -100px;
+}
+
 @media (max-width: 420px) {
   :root {
     --fs-md: 14px;
@@ -405,10 +466,6 @@ body.light .theme-toggle .sun {
 
   .navbar {
     padding: var(--sp-4) var(--sp-5);
-  }
-
-  .nav-actions a {
-    display: none; /* hide links on very small screens */
   }
 
   .hero {
@@ -457,11 +514,15 @@ body.light .theme-toggle .sun {
   }
 
   .navbar {
-    padding: var(--sp-4) var(--sp-6);
+    padding: var(--sp-2) var(--sp-6);
   }
 
   .hero {
     padding: var(--sp-7) var(--sp-6);
+  }
+
+  .logo {
+    font-size: var(--fs-xl);
   }
 
   .hero-container {
@@ -486,7 +547,7 @@ body.light .theme-toggle .sun {
   .queue-card {
     width: 100%;
   }
-}
+} 
 
 @media (min-width: 769px) and (max-width: 1024px) {
   :root {
@@ -496,15 +557,15 @@ body.light .theme-toggle .sun {
   }
 
   .navbar {
-    padding: var(--sp-4) var(--sp-6);
+    padding: var(--sp-2) var(--sp-4);
   }
 
   .hero {
-    padding: var(--sp-8) var(--sp-6);
+    padding: var(--sp-8) var(--sp-5);
   }
 
   .hero-container {
-    gap: var(--sp-6);
+    gap: var(--sp-4);
   }
 
   .hero-content {
@@ -514,4 +575,88 @@ body.light .theme-toggle .sun {
   .hero-preview {
     max-width: 400px;
   }
+
+  .queue-card h2 {
+    font-size: var(--fs-lg);
+  }
+}
+
+/* Responsive Navbar For Mobile Phones */
+@media (max-width: 550px) {
+  .menu-btn {
+    display: block;
+  }
+
+  .nav-actions a {
+    display: none;
+  }
+
+  .mobile-menu.active {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+  }
+
+  .mobile-menu a {
+    font-size: var(--fs-lg);
+    margin-bottom: var(--sp-2);
+  }
+
+  .theme-toggle {
+    height: 20px;
+    width: 60px;
+  }
+
+  .theme-toggle .knob {
+    width: 18px;
+    height: 18px;
+  }
+} 
+
+/* Loader Styles */
+.loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.loader-text {
+  font-size: var(--fs-2xl);
+  font-weight: 700;
+  background: var(--brand-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 20px;
+}
+
+.loader-bar {
+  width: 0%;
+  height: 4px;
+  background: var(--primary);
+  border-radius: 10px;
+}
+
+/* About Section */
+.aboutS {
+  width: 100%;
+  padding: var(--sp-8) var(--sp-7);
+  background: var(--bg-2);
+}
+
+.about-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.about-heading {
+
 }
