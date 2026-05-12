@@ -248,7 +248,8 @@ body.light .theme-toggle .sun {
 
 .hero-container {
   max-width: 1200px;
-  margin: var(--sp-8) auto;
+  padding: var(--sp-8) 0;
+  margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -466,6 +467,10 @@ body.light .theme-toggle .sun {
 
   .navbar {
     padding: var(--sp-4) var(--sp-5);
+  }
+
+  header {
+    padding-top: 60px;
   }
 
   .hero {
