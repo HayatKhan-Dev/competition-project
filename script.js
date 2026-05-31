@@ -1,4 +1,6 @@
 const themeToggle = document.getElementById("themeToggle");
+gsap.registerPlugin(ScrollTrigger);
+const sections = gsap.utils.toArray(".horizontal-wrapper > *");
 
 // Load saved theme
 window.addEventListener("DOMContentLoaded", () => {
@@ -84,5 +86,73 @@ document.addEventListener("DOMContentLoaded", () => {
       { duration: 1, y: 50, opacity: 0, ease: "power2.out" },
       "-=0.5",
     );
+  });
+
+  // Scroll-triggered animations
+  if (window.innerWidth > 768) {
+    const horizontalScroll = gsap.to(sections, {
+      xPercent: -100 * (sections.length - 1),
+      ease: "none",
+      scrollTrigger: {
+        trigger: ".horizontal-wrapper",
+        pin: true,
+        scrub: 3,
+        snap: 1 / (sections.length - 1),
+        toggleActions: "play none none reset",
+        end: () =>
+          "+=" + document.querySelector(".horizontal-wrapper").offsetWidth,
+      },
+    });
+
+    gsap.from(".about-heading", {
+      x: 200,
+      opacity: 0,
+      duration: 1.5,
+      scrollTrigger: {
+        trigger: ".aboutS",
+        containerAnimation: horizontalScroll,
+        start: "left 60%",
+        toggleActions: "restart none none reset",
+        invalidateOnRefresh: true,
+        once: false,
+      },
+    });
+
+    gsap.from(".about-left", {
+      x: -100,
+      opacity: 0,
+      duration: 1,
+      scrollTrigger: {
+        trigger: ".aboutS",
+        containerAnimation: horizontalScroll,
+        start: "left 60%",
+        toggleActions: "restart none none reset",
+        invalidateOnRefresh: true,
+        once: false,
+      },
+    });
+
+    gsap.from(".about-right", {
+      x: 100,
+      opacity: 0,
+      duration: 1,
+      scrollTrigger: {
+        trigger: ".aboutS",
+        containerAnimation: horizontalScroll,
+        start: "left 50%",
+        toggleActions: "restart none none reset",
+        invalidateOnRefresh: true,
+        once: false,
+      },
+    });
+  }
+
+  // other animations after scrll trigger
+  gsap.to(".queue-card", {
+    y: -12,
+    duration: 2,
+    repeat: -1,
+    yoyo: true,
+    ease: "power1.inOut",
   });
 });
