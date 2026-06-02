@@ -895,8 +895,7 @@ body.light .theme-toggle .sun {
   width: 100%;
   display: flex;
   max-width: 1200px;
-  margin: 0 auto;
-  gap: var(--sp-7);
+  gap: var(--sp-8);
 }
 
 .contact-container .contact-left,
@@ -956,6 +955,14 @@ body.light .theme-toggle .sun {
   background: transparent;
   color: var(--primary);
   border: 1px solid var(--primary);
+}
+
+.contact-dashboard {
+  background: var(--card);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-md);
+  padding: var(--sp-5);
+  border-radius: var(--radius-md);
 }
 
 /* Login Section Styles */
