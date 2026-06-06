@@ -42,6 +42,7 @@
   /* Default Theme Colors (Dark Mode) */
   --bg: #0b1220;
   --bg-2: #111a2e;
+  --nav: hsla(221, 46%, 12%, 0.411);
   --card: rgba(255, 255, 255, 0.05);
 
   --text: #f8fafc;
@@ -58,6 +59,7 @@
 body.light {
   --bg: #f8fafc;
   --bg-2: #ffffff;
+  --nav: hsla(222, 33%, 94%, 0.411);
   --card: rgba(0, 0, 0, 0.04);
 
   --text: #0f172a;
@@ -125,17 +127,19 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: var(--sp-4) var(--sp-7);
-    background-color: var(--bg-2);
-    border-bottom-left-radius: var(--radius-lg);
-    border-bottom-right-radius: var(--radius-lg);
-    border-bottom: 1px solid var(--border);
+    padding: var(--sp-2) var(--sp-7);
+    background-color: var(--nav);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
     box-shadow: var(--shadow-sm);
     position: fixed;
-    width: 100%;
-    top: 0;
-    left: 0;
+    width: 90%;
+    max-width: 1400px;
+    top: var(--sp-5);
+    left: 50%;
+    transform: translate(-50%);
     z-index: 10000;
+    backdrop-filter: blur(15px);
 }
 
 .logo {

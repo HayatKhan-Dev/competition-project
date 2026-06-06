@@ -62,8 +62,22 @@ document.addEventListener("DOMContentLoaded", () => {
     display: "none",
   });
 
+  loaderTl.from(".navbar", {
+    opacity: 0,
+    duration: 0.5,
+    ease: "power2.out",
+  });
+
+  loaderTl.from(".hero", {
+    opacity: 0,
+    duration: 0.5,
+    ease: "bounce.out",
+  });
+
   loaderTl.add(() => {
     const tl = gsap.timeline();
+
+    tl.from(".navbar", { duration: 1, y: -30, opacity: 0, ease: "power2.out" });
 
     tl.from(".logo", { duration: 1, y: -50, opacity: 0, ease: "bounce.out" });
     tl.from(
@@ -81,9 +95,15 @@ document.addEventListener("DOMContentLoaded", () => {
       { duration: 1, y: 50, opacity: 0, ease: "power2.out" },
       "-=0.5",
     );
+    tl.from(".live-queue", {
+      duration: 0.5,
+      y: 20,
+      opacity: 0,
+      ease: "power2.out",
+    },"-=0.5");
     tl.from(
       ".queue-row",
-      { duration: 1, y: 50, opacity: 0, ease: "power2.out" },
+      { duration: 1, x: 50, opacity: 0, ease: "power2.out", stagger: 0.2 },
       "-=0.5",
     );
   });
@@ -96,7 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
       scrollTrigger: {
         trigger: ".horizontal-wrapper",
         pin: true,
-        scrub: 3,
+        scrub: 2,
         snap: 1 / (sections.length - 1),
         toggleActions: "play none none reset",
         end: () =>
@@ -104,47 +124,62 @@ document.addEventListener("DOMContentLoaded", () => {
       },
     });
 
-    gsap.from(".about-heading", {
-      x: 200,
-      opacity: 0,
-      duration: 1.5,
+    const aboutTl = gsap.timeline({
       scrollTrigger: {
         trigger: ".aboutS",
         containerAnimation: horizontalScroll,
         start: "left 60%",
-        toggleActions: "restart none none reset",
-        invalidateOnRefresh: true,
-        once: false,
-      },
-    });
+        toggleActions: "play none none reset",
+      }
+    })
 
-    gsap.from(".about-left", {
-      x: -100,
+    aboutTl.from(".about-heading", {
+      y: 50,
       opacity: 0,
-      duration: 1,
-      scrollTrigger: {
-        trigger: ".aboutS",
-        containerAnimation: horizontalScroll,
-        start: "left 60%",
-        toggleActions: "restart none none reset",
-        invalidateOnRefresh: true,
-        once: false,
-      },
+      duration: 0.8,
     });
 
-    gsap.from(".about-right", {
+    aboutTl.from(".about-left", {
+      x: -200,
+      opacity: 0,
+      duration: 0.7,
+    });
+
+    aboutTl.from(".about-intro", {
+      y: 50,
+      opacity: 0,
+      duration: 0.5,
+    });
+
+    aboutTl.from(".about-points", {
+      y: 30,
+      opacity: 0,
+      duration: 0.5,
+    })
+
+    aboutTl.from(".point-icon", {
+      x: 30,
+      opacity: 0,
+      duration: 0.5,
+    });
+
+    aboutTl.from(".point-text", {
+      x: -60,
+      opacity: 0,
+      duration: 0.5,
+    }, "-=0.5");
+
+    aboutTl.from(".about-right", {
       x: 100,
       opacity: 0,
-      duration: 1,
-      scrollTrigger: {
-        trigger: ".aboutS",
-        containerAnimation: horizontalScroll,
-        start: "left 50%",
-        toggleActions: "restart none none reset",
-        invalidateOnRefresh: true,
-        once: false,
-      },
+      duration: 0.7,
     });
+
+    aboutTl.from(".dasboard-stats", {
+      y: 30,
+      opacity: 0,
+      duration: 0.5,
+    })
   }
 
   // other animations after scrll trigger
@@ -155,4 +190,45 @@ document.addEventListener("DOMContentLoaded", () => {
     yoyo: true,
     ease: "power1.inOut",
   });
+
+  // Contact Us Page Animation
+  const contactTl = gsap.timeline({
+    ease: "power2.out",
+    scrollTrigger: {
+      trigger: ".contact-section",
+      start: "top 60%",
+      toggleActions: "play none none reset",
+    }
+  });
+
+  contactTl.from(".contact-title", {
+    y: 50,
+    opacity: 0,
+    duration: 0.8,
+  });
+
+  contactTl.from(".contact-desc",{
+    y: 30,
+    opacity: 0,
+    duration: 0.5,
+  },"-=0.5");
+
+  contactTl.from(".info-item", {
+    x: 30,
+    opacity: 0,
+    duration: 0.8,
+    stagger: 0.2,
+  }, "-=0.5");
+
+  contactTl.from(".contact-dashboard", {
+    x: 100,
+    opacity: 0,
+    duration: 0.7,
+  }, "-=0.5");
+  
+  contactTl.from(".contact-header", {
+    y: 30,
+    opacity: 0,
+    duration: 0.5,
+  })
 });
