@@ -52,8 +52,8 @@
 
   --muted-border: rgba(255, 255, 255, 0.06);
   --primary: #3b82f6;
-  --success: #10b981;
-  --danger: #ef4444;
+  --success: #13684c75;
+  --danger: #dfb0b0;
 }
 
 body.light {
@@ -138,7 +138,7 @@ header {
     top: var(--sp-5);
     left: 50%;
     transform: translate(-50%);
-    z-index: 10000;
+    z-index: 100;
     backdrop-filter: blur(15px);
 }
 
@@ -708,7 +708,7 @@ body.light .theme-toggle .sun {
   font-weight: 700;
 }
 
-.dashboard-header .live-badge {
+.live-badge {
   width: 30px;
   height: 30px;
   background: green;

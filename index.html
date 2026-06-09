@@ -10,6 +10,7 @@
     integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="icon" type="image/x-icon" href="images/img.png" />
+  <link rel="stylesheet" href="chatbot.css">
 </head>
 
 <body>
@@ -376,6 +377,24 @@
     <div class="loader-text">QueueX</div>
     <div class="loader-bar"></div>
   </div>
-</body>
 
+  <div class="chat-overlay"></div>
+  
+</body>
+<div class="chat-panel-div">
+    <div class="chat-header">
+      <div class="logo chat-logo">QueueX</div>
+      <span class="live-badge"></span>
+    </div>
+    <div class="message-area">
+      <div class="bot-message">Hello! How can I assist you today?</div>
+      <div class="user-message">I want to know how can i get a token?</div>
+      <div class="user-message">Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias, quod!</div>
+      <div class="bot-message">You can get the token by clicking on the get token button.</div>
+    </div>
+    <div class="chat-input">
+      <input type="text" name="" id="chat-input" placeholder="Type your message here...">
+      <button class="send-btn"><i class="fa-solid plane-icon fa-paper-plane "></i>Send</button>
+    </div>
+</div>
 </html>
