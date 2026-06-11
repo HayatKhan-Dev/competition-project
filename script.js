@@ -42,6 +42,91 @@ document.querySelectorAll(".mobile-menu a").forEach((link) => {
   });
 });
 
+// Chatbot Toggle Code
+const chatBtn = document.querySelector(".contact-cta");
+const chatOverlay = document.querySelector(".chat-overlay");
+const chatPanel = document.querySelector(".chat-panel-div");
+const closeChatBtn = document.querySelector(".close-chat-btn");
+
+chatBtn.addEventListener('click', () => {
+  chatOverlay.classList.add("active");
+  chatPanel.classList.add("active");
+});
+
+closeChatBtn.addEventListener('click', () => {
+  chatOverlay.classList.remove("active");
+  chatPanel.classList.remove("active");
+});
+
+chatOverlay.addEventListener('click', () => {
+  chatOverlay.classList.remove("active");
+  chatPanel.classList.remove('active')
+});
+
+// Dynamic Message Creation For Chatbot And User
+const chatInput = document.getElementById('chat-input');
+const sendBtn = document.querySelector('.send-btn');
+const messageArea = document.querySelector(".message-area")
+
+const sendMessage = () => {
+let userChatValue = chatInput.value.trim();
+  if (userChatValue === undefined || userChatValue === "") {
+    userChatValue = "";
+  } else {
+    let userDiv = document.createElement('div');
+    userDiv.textContent = userChatValue;
+    userDiv.classList.add("user-message");
+    messageArea.appendChild(userDiv);
+    // Bot Typing Affect
+    let typingDiv = document.createElement('div');
+    typingDiv.textContent = "QueueX is typing...";
+    typingDiv.classList.add("bot-message");
+    messageArea.appendChild(typingDiv);
+    messageArea.scrollTop = messageArea.scrollHeight;
+
+    setTimeout(() => {
+      typingDiv.remove();
+      let botResponse = getBotResponse(userChatValue.toLowerCase());
+      let botDiv = document.createElement("div");
+      botDiv.textContent = botResponse;
+      botDiv.classList.add('bot-message');
+      messageArea.appendChild(botDiv);
+    }, 1000);
+
+    chatInput.value = ""
+  }
+}
+
+function getBotResponse (userMessage) {
+  if (userMessage.includes("hello") || userMessage.includes("hi") || userMessage.includes("hey")) {
+    return "Hello, Welcome To The QueueX, How Can I Help You Today!"
+  } else if (userMessage.includes("you")) {
+    return "I'm doing great. Thanks for asking, How you doing!!"
+  } else if (userMessage.includes("great") || userMessage.includes("fine")) {
+    return "Good to hear that, What can i assist you with!"
+  } else if (userMessage.includes("token")) {
+    return "You can get the token by clicking on the get token button in homepage"
+  } else if (userMessage.includes("queue")) {
+    return "You can join the queue directly from the dashboard"
+  } else if (userMessage.includes("track")) {
+    return "You can track your queue position in real time using QueueX."
+  } else if (userMessage.includes("contact", "support", "help")) {
+    return "Our support team is available to assist you with any issues."
+  } else {
+    return "I'm sorry, I didn't understand that question. Try asking about tokens, queues, or tracking."
+  }
+}
+
+sendBtn.addEventListener('click', sendMessage);
+chatInput.addEventListener('keydown', (e) => {
+  if (e.key === "Enter") {
+    sendMessage();
+  }
+});
+
+// Token Modal
+
+
 // GSAP Animations
 document.addEventListener("DOMContentLoaded", () => {
   const loaderTl = gsap.timeline();

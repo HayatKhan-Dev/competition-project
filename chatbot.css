@@ -1,4 +1,5 @@
-.chat-overlay {
+.chat-overlay,
+.token-overlay {
     width: 100%;
     height: 100vh;
     position: fixed;
@@ -12,7 +13,8 @@
     pointer-events: none;
 }
 
-.chat-overlay.active {
+.chat-overlay.active,
+.token-overlay.active {
     opacity: 1;
     visibility: visible;
     pointer-events: all;
@@ -30,7 +32,7 @@
     border-bottom-left-radius: var(--radius-lg);
     backdrop-filter: blur(15px);
     z-index: 102;
-    /* transform: translateX(100%); */
+    transform: translateX(100%);
     transition: all 300ms ease;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     display: flex;
@@ -55,6 +57,36 @@
     font-weight: 800;
     color: var(--text);
     padding: 0;
+}
+
+.chat-actions {
+    display: flex;
+    gap: var(--sp-5);
+    align-items: center;
+    justify-content: center;
+}
+
+.close-chat-btn {
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    background: transparent;
+    color: var(--text);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-fast);
+    font-size: var(--fs-md);
+    transform: rotate(90deg);
+}
+
+.close-chat-btn:hover {
+    transform: rotate(0) scale(1.02);
+    background: var(--border);
+    color: var(--text);
+    box-shadow: var(--shadow-sm);
 }
 
 .message-area {
@@ -89,13 +121,11 @@
 .chat-input {
     border-top: 1px solid var(--border);
     display: flex;
-    width: 90%;
-    margin: auto auto;
+    width: 100%;
     gap: 0.5rem;
     padding: 0;
-    background: var(--success);
+    background: var(--card);
     border-radius: var(--radius-md);
-    margin-bottom: var(--sp-4);
     height: 50px
 }
 
@@ -109,6 +139,7 @@
     font-size: var(--fs-lg);
     outline: none;
     height: 100%;
+    margin-left: var(--sp-2);
 }
 
 .chat-input input::placeholder {
@@ -145,6 +176,7 @@
 
 .chat-input .send-btn:hover {
     padding-right: 45px;
+    box-shadow: var(--shadow-sm)
 }
 
 .chat-input .send-btn:hover i {

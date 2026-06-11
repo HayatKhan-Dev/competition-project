@@ -367,24 +367,57 @@
     </section>
   </main>
 
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"
-    integrity="sha512-P2IDYZfqSwjcSjX0BKeNhwRUH8zRPGlgcWl5n6gBLzdi4Y5/0O4zaXrtO4K9TZK6Hn1BenYpKowuCavNandERg=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script src="script.js"></script>
+  <!-- Token Modal -->
+  <div class="token-overlay"></div>
+  <div class="token-modal">
+    <div class="modal-header">
+      <div class="modal-title">
+        <i class="fa-solid fa-ticket"></i>
+        <span>Generate Token</span>
+      </div>
+      <button class="close-token-btn">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <div class="token-desc"><p>Fill in your details to join a queue.</p></div>
+    <div class="token-form">
+      <label for="service">Select Service</label>
 
+      <select name="service" id="service">
+        <option value="Hospital">Hospital</option>
+        <option value="Bank">Bank</option>
+        <option value="Government Office">Government Office</option>
+        <option value="Customer Support">Customer Support</option>
+      </select>
+
+      <input type="text" id="name-input" placeholder="Enter your name">
+      <input type="number" id="phone" placeholder="Enter Your Phone Number">
+      <div class="token-cta">
+        <button class="generate-btn">Generate Token</button>
+      </div>
+    </div>
+
+    <div class="token-result"></div>
+  </div>
+
+
+  <!-- Loader Animation -->
   <div class="loader">
     <div class="loader-text">QueueX</div>
     <div class="loader-bar"></div>
   </div>
 
+  <!-- ChatBot -->
   <div class="chat-overlay"></div>
-  
-</body>
-<div class="chat-panel-div">
+  <div class="chat-panel-div">
     <div class="chat-header">
       <div class="logo chat-logo">QueueX</div>
-      <span class="live-badge"></span>
+      <div class="chat-actions">
+        <span class="live-badge"></span>
+        <button class="close-chat-btn">
+        <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
     </div>
     <div class="message-area">
       <div class="bot-message">Hello! How can I assist you today?</div>
@@ -393,8 +426,15 @@
       <div class="bot-message">You can get the token by clicking on the get token button.</div>
     </div>
     <div class="chat-input">
-      <input type="text" name="" id="chat-input" placeholder="Type your message here...">
+      <input type="text" id="chat-input" placeholder="Type your message here...">
       <button class="send-btn"><i class="fa-solid plane-icon fa-paper-plane "></i>Send</button>
     </div>
-</div>
+ </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"
+    integrity="sha512-P2IDYZfqSwjcSjX0BKeNhwRUH8zRPGlgcWl5n6gBLzdi4Y5/0O4zaXrtO4K9TZK6Hn1BenYpKowuCavNandERg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="script.js"></script>
+</body>
 </html>
