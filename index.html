@@ -57,7 +57,7 @@
               </p>
 
               <div class="hero-buttons">
-                <a href="user.html" class="btn btn-primary" target="_blank">Get Token</a>
+                <button class="btn btn-primary" id="get-token" target="_blank">Get Token</button>
                 <a href="admin.html" class="btn btn-secondary" target="_blank">Admin Panel</a>
               </div>
 
@@ -369,7 +369,7 @@
 
   <!-- Token Modal -->
   <div class="token-overlay"></div>
-  <div class="token-modal">
+    <div class="token-modal">
     <div class="modal-header">
       <div class="modal-title">
         <i class="fa-solid fa-ticket"></i>
@@ -381,24 +381,32 @@
     </div>
     <div class="token-desc"><p>Fill in your details to join a queue.</p></div>
     <div class="token-form">
-      <label for="service">Select Service</label>
+      <div class="service-input-container">
+        <label for="service">Select Service: </label>
 
-      <select name="service" id="service">
+      <select name="service" id="service" required>
+        <option value="Default" selected disabled>Select a option</option>
         <option value="Hospital">Hospital</option>
         <option value="Bank">Bank</option>
         <option value="Government Office">Government Office</option>
         <option value="Customer Support">Customer Support</option>
       </select>
+      </div>
 
-      <input type="text" id="name-input" placeholder="Enter your name">
-      <input type="number" id="phone" placeholder="Enter Your Phone Number">
+      <div class="token-input-container">
+        <input type="text" class="token-input" id="name-input" placeholder="Enter your name" required>
+        <input type="number" class="token-input" id="phone" placeholder="Enter Your Phone Number" required>
+      </div>
       <div class="token-cta">
         <button class="generate-btn">Generate Token</button>
       </div>
     </div>
+    <div class="token-result">
+      
+      <button class="back-btn"></button>
+    </div>
+    </div>
 
-    <div class="token-result"></div>
-  </div>
 
 
   <!-- Loader Animation -->
