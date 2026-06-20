@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QueueX Panel</title>
+    <link rel="stylesheet" href="admin.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="admin-header">
+      <div class="header-left">
+        <div class="logo">QueueX</div>
+        <span>Admin Panel</span>
+      </div>
+      <div class="header-center">
+        <input type="text" class="search-input" placeholder="Search-token..." />
+        <i class="fa-solid fa-angle-right enter"></i>
+      </div>
+      <div class="header-right">
+        <div class="admin-info">
+          <span>Admin</span>
+          <i class="fa-solid fa-user"></i>
+        </div>
+        <div class="btn-container">
+          <button class="logout-btn">Logout</button>
+          <div class="animation"></div>
+        </div>
+      </div>
+    </header>
+
+    <main class="admin-main">
+      <div class="dashboard-grid">
+        <div class="panel-card">
+          <div class="card-icon">
+            <i class="fa-solid fa-ticket"></i>
+          </div>
+          <div class="card-info">
+            <h2>245</h2>
+            <p>Total Tokens</p>
+          </div>
+        </div>
+
+        <div class="panel-card">
+          <div class="card-icon">
+            <i class="fa-solid fa-clock"></i>
+          </div>
+          <div class="card-info">
+            <h2>18</h2>
+            <p>Active Queues</p>
+          </div>
+        </div>
+
+        <div class="panel-card">
+          <div class="card-icon">
+            <i class="fa-solid fa-circle-check"></i>
+          </div>
+          <div class="card-info">
+            <h2>129</h2>
+            <p>Completed Today</p>
+          </div>
+        </div>
+
+        <div class="panel-card">
+          <div class="card-icon">
+            <i class="fa-solid fa-users"></i>
+          </div>
+          <div class="card-info">
+            <h2>42</h2>
+            <p>Waiting Users</p>
+          </div>
+        </div>
+      </div>
+      <div class="dashboard-content">
+        <div class="recent-tokens">
+          <div class="section-header">
+            <h2>Recent Tokens</h2>
+          </div>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Token</th>
+                <th>Service</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <td>B-021</td>
+                <td>Bank</td>
+                <td>Waiting</td>
+              </tr>
+
+              <tr>
+                <td>H-056</td>
+                <td>Hospital</td>
+                <td>Active</td>
+              </tr>
+
+              <tr>
+                <td>G-012</td>
+                <td>Government Office</td>
+                <td>Completed</td>
+              </tr>
+
+              <tr>
+                <td>S-089</td>
+                <td>Customer Support</td>
+                <td>Waiting</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="admin-activity-panel">
+          <div class="section-header">
+            <h2>Recent Activity</h2>
+          </div>
+
+          <div class="admin-activity-item">
+            <i class="fa-solid fa-circle-plus"></i>
+            <p>New token generated for Bank Queue</p>
+          </div>
+
+          <div class="admin-activity-item">
+            <i class="fa-solid fa-user-plus"></i>
+            <p>User joined Hospital Queue</p>
+          </div>
+
+          <div class="admin-activity-item">
+            <i class="fa-solid fa-clock"></i>
+            <p>Queue waiting time updated</p>
+          </div>
+
+          <div class="admin-activity-item">
+            <i class="fa-solid fa-check"></i>
+            <p>Government Office token completed</p>
+          </div>
+        </div>
+      </div>
+      <div class="queue-overview">
+        <div class="overview-card">
+          <div class="overview-header">
+            <h3>Bank Queue</h3>
+            <span>15 Waiting</span>
+          </div>
+
+          <div class="admin-progress-bar">
+            <div class="admin-progress-fill bank-fill"></div>
+          </div>
+        </div>
+
+        <div class="overview-card">
+          <div class="overview-header">
+            <h3>Hospital Queue</h3>
+            <span>8 Waiting</span>
+          </div>
+
+          <div class="admin-progress-bar">
+            <div class="admin-progress-fill hospital-fill"></div>
+          </div>
+        </div>
+
+        <div class="overview-card">
+          <div class="overview-header">
+            <h3>Government Office</h3>
+            <span>23 Waiting</span>
+          </div>
+
+          <div class="admin-progress-bar">
+            <div class="admin-progress-fill gov-fill"></div>
+          </div>
+        </div>
+
+        <div class="overview-card">
+          <div class="overview-header">
+            <h3>Customer Support</h3>
+            <span>5 Waiting</span>
+          </div>
+
+          <div class="admin-progress-bar">
+            <div class="admin-progress-fill support-fill"></div>
+          </div>
+        </div>
+      </div>
+      <div class="quick-actions">
+        <button>
+          <i class="fa-solid fa-plus"></i>
+          Generate Token
+        </button>
+
+        <button>
+          <i class="fa-solid fa-chart-line"></i>
+          View Reports
+        </button>
+
+        <button>
+          <i class="fa-solid fa-users"></i>
+          Add Queue
+        </button>
+
+        <button>
+          <i class="fa-solid fa-bell"></i>
+          Notify Users
+        </button>
+      </div>
+      <div class="queue-status">
+        <div class="status-card">
+          <h3>Bank Queue</h3>
+          <span class="live-indicator">Live</span>
+
+          <div class="status-info">
+            <p>Current Token</p>
+            <h2>B-034</h2>
+          </div>
+
+          <div class="status-info">
+            <p>Next Token</p>
+            <h2>B-035</h2>
+          </div>
+        </div>
+
+        <div class="status-card">
+          <h3>Hospital Queue</h3>
+          <span class="live-indicator">Live</span>
+
+          <div class="status-info">
+            <p>Current Token</p>
+            <h2>H-021</h2>
+          </div>
+
+          <div class="status-info">
+            <p>Next Token</p>
+            <h2>H-022</h2>
+          </div>
+        </div>
+      </div>
+      <div class="analytics-grid">
+        <div class="analytics-card">
+          <h3>Average Wait Time</h3>
+          <h1>18 mins</h1>
+        </div>
+
+        <div class="analytics-card">
+          <h3>Peak Hours</h3>
+          <h1>11AM - 2PM</h1>
+        </div>
+
+        <div class="analytics-card">
+          <h3>Customer Satisfaction</h3>
+          <h1>94%</h1>
+        </div>
+      </div>
+      <div class="notification-panel">
+        <div class="section-header">
+          <h2>Notifications</h2>
+        </div>
+
+        <div class="notification-item">
+          <i class="fa-solid fa-bell"></i>
+          <div>
+            <h4>Queue Updated</h4>
+            <p>Bank queue waiting time changed to 10 mins.</p>
+          </div>
+        </div>
+
+        <div class="notification-item">
+          <i class="fa-solid fa-user-plus"></i>
+          <div>
+            <h4>New User Joined</h4>
+            <p>Customer joined Hospital queue.</p>
+          </div>
+        </div>
+
+        <div class="notification-item">
+          <i class="fa-solid fa-circle-check"></i>
+          <div>
+            <h4>Token Completed</h4>
+            <p>Token B-034 has been served successfully.</p>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer class="admin-footer">
+      <div class="footer-brand">
+        <h2>QueueX</h2>
+        <p>Smart Queue Management System</p>
+      </div>
+
+      <div class="footer-stats">
+        <div class="footer-box">
+          <h4>Total Services</h4>
+          <span>04</span>
+        </div>
+
+        <div class="footer-box">
+          <h4>System Status</h4>
+          <span class="online-status">
+            <i class="fa-solid fa-circle"></i>
+            Online
+          </span>
+        </div>
+
+        <div class="footer-box">
+          <h4>Version</h4>
+          <span>v1.0</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

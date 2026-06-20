@@ -1,6 +1,5 @@
 const themeToggle = document.getElementById("themeToggle");
 gsap.registerPlugin(ScrollTrigger);
-const sections = gsap.utils.toArray(".horizontal-wrapper > *");
 
 // Load saved theme
 window.addEventListener("DOMContentLoaded", () => {
@@ -201,28 +200,28 @@ generateButton.addEventListener("click", () => {
   </button>
 </div>`;
 
-const backBtn = document.querySelector(".back-btn");
+  const backBtn = document.querySelector(".back-btn");
 
-backBtn.addEventListener("click", () => {
-  tokenResult.classList.remove("active");
-  tokenModal.classList.add("active");
+  backBtn.addEventListener("click", () => {
+    tokenResult.classList.remove("active");
+    tokenModal.classList.add("active");
 
-  gsap.fromTo(
-    tokenModal,
-    {
-      opacity: 0,
-      scale: 0.85,
-      y: 20,
-    },
-    {
-      opacity: 1,
-      scale: 1,
-      y: 0,
-      duration: 0.4,
-      ease: "power3.out",
-    }
-  );
-});
+    gsap.fromTo(
+      tokenModal,
+      {
+        opacity: 0,
+        scale: 0.85,
+        y: 20,
+      },
+      {
+        opacity: 1,
+        scale: 1,
+        y: 0,
+        duration: 0.4,
+        ease: "power3.out",
+      },
+    );
+  });
 
   tokenModal.classList.remove("active");
   tokenResult.classList.add("active");
@@ -366,82 +365,47 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Scroll-triggered animations
-  if (window.innerWidth > 768) {
-    const horizontalScroll = gsap.to(sections, {
-      xPercent: -100 * (sections.length - 1),
-      ease: "none",
-      scrollTrigger: {
-        trigger: ".horizontal-wrapper",
-        pin: true,
-        scrub: 2,
-        snap: 1 / (sections.length - 1),
-        toggleActions: "play none none reset",
-        end: () =>
-          "+=" + document.querySelector(".horizontal-wrapper").offsetWidth,
-      },
-    });
+  const mm = gsap.matchMedia();
 
-    const aboutTl = gsap.timeline({
+  if (window.innerWidth >= 768) {
+    mm.add("(min-width: 968px)", () => {
+      const sections = gsap.utils.toArray(".horizontal-wrapper > *");
+
+      const horizontalScroll = gsap.to(sections, {
+        xPercent: -100 * (sections.length - 1),
+        ease: "none",
+        scrollTrigger: {
+          trigger: ".horizontal-wrapper",
+          pin: true,
+          scrub: 1,
+          snap: 1 / (sections.length - 1),
+          end: () => "+=" + sections.length * window.innerWidth,
+        },
+      });
+
+      const aboutTl = gsap.timeline({
       scrollTrigger: {
         trigger: ".aboutS",
         containerAnimation: horizontalScroll,
         start: "left 60%",
-        toggleActions: "play none none reset",
       },
     });
 
-    aboutTl.from(".about-heading", {
-      y: 50,
-      opacity: 0,
-      duration: 0.8,
+    // ABOUT animation (desktop/tablet only)
+    aboutTl.from(".about-heading", { y: 50, opacity: 0, duration: 0.8 });
+    aboutTl.from(".about-left", { x: -200, opacity: 0, duration: 0.7 });
+    aboutTl.from(".about-intro", { y: 50, opacity: 0, duration: 0.5 });
+    aboutTl.from(".about-right", { x: 100, opacity: 0, duration: 0.7 });
+
+    return () => {
+      horizontalScroll.kill();
+    };
+
+      return () => horizontalScroll.kill();
     });
 
-    aboutTl.from(".about-left", {
-      x: -200,
-      opacity: 0,
-      duration: 0.7,
-    });
 
-    aboutTl.from(".about-intro", {
-      y: 50,
-      opacity: 0,
-      duration: 0.5,
-    });
-
-    aboutTl.from(".about-points", {
-      y: 30,
-      opacity: 0,
-      duration: 0.5,
-    });
-
-    aboutTl.from(".point-icon", {
-      x: 30,
-      opacity: 0,
-      duration: 0.5,
-    });
-
-    aboutTl.from(
-      ".point-text",
-      {
-        x: -60,
-        opacity: 0,
-        duration: 0.5,
-      },
-      "-=0.5",
-    );
-
-    aboutTl.from(".about-right", {
-      x: 100,
-      opacity: 0,
-      duration: 0.7,
-    });
-
-    aboutTl.from(".dasboard-stats", {
-      y: 30,
-      opacity: 0,
-      duration: 0.5,
-    });
-  }
+  };
 
   // other animations after scrll trigger
   gsap.to(".queue-card", {

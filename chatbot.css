@@ -348,16 +348,15 @@
    pointer-events: none;
    transition: var(--transition-md);
    position: fixed;
+   transform: translate(0, 0);
    width: 500px;
-   top: 50%;
-   left: 50%;
+   top: -20%;
 }
 
 .token-result.active {
     opacity: 1;
     visibility: visible;
     pointer-events: all;
-    transform: translate(-50%, -50%) scale(1);
 }
 
 .result-header {
@@ -413,6 +412,7 @@
     line-height: 1.6;
     font-weight: 600;
     border: 1px solid var(--primary);
+    background: var(--card);
     width: 100%;
     padding: var(--sp-2) var(--sp-4);
     border-radius: var(--radius-md);
@@ -422,4 +422,10 @@
 
 .back-btn:hover {
     background: var(--primary);
+}
+
+@media (max-width: 992px) {
+    .chat-panel-div {
+  width: 60%
+}
 }
