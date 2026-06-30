@@ -86,17 +86,22 @@
 
                 <div class="queue-row">
                   <span class="serving">Now Serving</span>
-                  <strong>H-021</strong>
+                  <strong id="serving-now">H-021</strong>
                 </div>
 
                 <div class="queue-row">
                   <span>Your Token</span>
-                  <strong>H-026</strong>
+                  <strong id="your-token">H-026</strong>
+                </div>
+
+                <div class="queue-row">
+                  <span>People Ahead</span>
+                  <strong id="peopleAhead">5</strong>
                 </div>
 
                 <div class="queue-row">
                   <span>Estimated Time</span>
-                  <strong>25 mins</strong>
+                  <strong id="estimated-time">25 mins</strong>
                 </div>
                 <button class="join-btn" target="_blank">Join Queue</button>
               </div>
@@ -321,10 +326,10 @@
                 <span>New Support Request Received</span>
                 <p>1 Hour Ago</p>
               </div>
-                <div class="activity-item contact-activity">
-                  <span>Customer Feedback Received</span>
-                  <p>1 Day Ago</p>
-                </div>
+              <div class="activity-item contact-activity">
+                <span>Customer Feedback Received</span>
+                <p>1 Day Ago</p>
+              </div>
             </div>
           </div>
         </div>
@@ -340,18 +345,32 @@
         <div class="square" style="--i: 4"></div>
         <div class="form-container">
           <div class="form">
+            <span class="form-tag">QUEUEX</span>
             <h2>Login Form</h2>
             <form>
-              <div class="inputBox">
-                <input type="text" placeholder="Username" />
+              <div class="input-group">
+                <div class="inputBox">
+                  <input type="text" placeholder="Full Name" />
+                </div>
+
+                <div class="inputBox">
+                  <input type="Number" placeholder="Phone Number" />
+                </div>
+              </div>
+
+
+              <div class="input-group">
+                <div class="inputBox">
+                  <input type="email" placeholder="Email">
+                </div>
+
+                <div class="inputBox">
+                  <input type="text" placeholder="Department">
+                </div>
               </div>
 
               <div class="inputBox">
-                <input type="password" placeholder="Password" />
-              </div>
-
-              <div class="inputBox">
-                <input type="submit" value="Login" />
+                <input type="submit" value="Join Queue" />
               </div>
 
               <p class="forget">
@@ -370,49 +389,49 @@
   <footer class="main-footer">
 
     <div class="footer-container">
-        <div class="footer-brand">
-            <h2 class="footer-logo">QueueX</h2>
-            <p>Smart queue management that helps customers save time and businesses reduce waiting lines.</p>
+      <div class="footer-brand">
+        <h2 class="footer-logo">QueueX</h2>
+        <p>Smart queue management that helps customers save time and businesses reduce waiting lines.</p>
+      </div>
+
+      <div class="footer-links">
+        <h3>Quick Links</h3>
+        <a href="#">Home</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <a href="how-it-works.html">How It Works</a>
+      </div>
+
+      <div class="footer-links">
+        <h3>Services</h3>
+        <a href="#">Queue Tracking</a>
+        <a href="#">Live Updates</a>
+        <a href="#">Token System</a>
+        <a href="#">Admin Dashboard</a>
+      </div>
+
+      <div class="footer-links">
+        <h3>Contact</h3>
+        <p><i class="fa-solid fa-envelope"></i>support@queuex.com</p>
+        <p><i class="fa-solid fa-phone"></i>+92 370 8655033</p>
+
+        <div class="footer-socials">
+          <a href="#"><i class="fa-brands fa-facebook"></i></a>
+          <a href="#"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#"><i class="fa-brands fa-linkedin"></i></a>
         </div>
 
-        <div class="footer-links">
-            <h3>Quick Links</h3>
-            <a href="#">Home</a>
-            <a href="#about">About</a>
-            <a href="#contact">Contact</a>
-            <a href="how-it-works.html">How It Works</a>
-        </div>
-
-        <div class="footer-links">
-            <h3>Services</h3>
-            <a href="#">Queue Tracking</a>
-            <a href="#">Live Updates</a>
-            <a href="#">Token System</a>
-            <a href="#">Admin Dashboard</a>
-        </div>
-
-        <div class="footer-links">
-            <h3>Contact</h3>
-            <p><i class="fa-solid fa-envelope"></i>support@queuex.com</p>
-            <p><i class="fa-solid fa-phone"></i>+92 370 8655033</p>
-
-            <div class="footer-socials">
-                <a href="#"><i class="fa-brands fa-facebook"></i></a>
-                <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                <a href="#"><i class="fa-brands fa-linkedin"></i></a>
-            </div>
-
-        </div>
+      </div>
     </div>
 
     <div class="footer-bottom">
       <p>© 2026 QueueX. All Rights Reserved.</p>
     </div>
-</footer>
+  </footer>
 
   <!-- Token Modal -->
   <div class="token-overlay"></div>
-    <div class="token-modal">
+  <div class="token-modal">
     <div class="modal-header">
       <div class="modal-title">
         <i class="fa-solid fa-ticket"></i>
@@ -422,18 +441,20 @@
         <i class="fa-solid fa-xmark"></i>
       </button>
     </div>
-    <div class="token-desc"><p>Fill in your details to join a queue.</p></div>
+    <div class="token-desc">
+      <p>Fill in your details to join a queue.</p>
+    </div>
     <div class="token-form">
       <div class="service-input-container">
         <label for="service">Select Service: </label>
 
-      <select name="service" id="service" required>
-        <option value="Default" selected disabled>Select a option</option>
-        <option value="Hospital">Hospital</option>
-        <option value="Bank">Bank</option>
-        <option value="Government Office">Government Office</option>
-        <option value="Customer Support">Customer Support</option>
-      </select>
+        <select name="service" id="service" required>
+          <option value="Default" selected disabled>Select a option</option>
+          <option value="Hospital">Hospital</option>
+          <option value="Bank">Bank</option>
+          <option value="Government Office">Government Office</option>
+          <option value="Customer Support">Customer Support</option>
+        </select>
       </div>
 
       <div class="token-input-container">
@@ -445,10 +466,10 @@
       </div>
     </div>
     <div class="token-result">
-      
+
       <button class="back-btn"></button>
     </div>
-    </div>
+  </div>
 
 
 
@@ -466,7 +487,7 @@
       <div class="chat-actions">
         <span class="live-badge"></span>
         <button class="close-chat-btn">
-        <i class="fa-solid fa-xmark"></i>
+          <i class="fa-solid fa-xmark"></i>
         </button>
       </div>
     </div>
@@ -480,7 +501,12 @@
       <input type="text" id="chat-input" placeholder="Type your message here...">
       <button class="send-btn"><i class="fa-solid plane-icon fa-paper-plane "></i>Send</button>
     </div>
- </div>
+  </div>
+  
+  <!-- toast notification after the queue finishes -->
+  <div id="toast" class="toast">
+  🎉 It's your turn! Please proceed to the counter.
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"
@@ -488,4 +514,5 @@
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="script.js"></script>
 </body>
+
 </html>

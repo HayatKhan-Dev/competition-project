@@ -1,12 +1,68 @@
 const themeToggle = document.getElementById("themeToggle");
 gsap.registerPlugin(ScrollTrigger);
 
+const servingNow = document.getElementById("serving-now");
+const yourToken = document.getElementById("your-token");
+const estimatedTime = document.getElementById("estimated-time");
+let peopleInfront = document.getElementById("peopleAhead");
+let nowServing = 21;
+
+let currentToken = null;
+let queueInterval;
+const toast = document.getElementById("toast");
+
+function showToast(message){
+    toast.textContent = message;
+    toast.classList.add("show");
+    setTimeout(()=>{
+        toast.classList.remove("show");
+    },5000);
+}
+
+function startQueueSimulation () {
+  clearInterval(queueInterval);
+  queueInterval = setInterval(() => {
+    nowServing++;
+    servingNow.textContent = `H-${String(nowServing).padStart(3, "0")}`;
+    peopleAhead = Math.max(0, currentToken - nowServing);
+    peopleInfront.textContent = peopleAhead;
+    let liveWait = peopleAhead * 2;
+    if (liveWait >= 25) {
+    estimatedTime.textContent = "40 mins+";
+    } else {
+        estimatedTime.textContent = `${liveWait} mins`;
+    }
+    if (nowServing == currentToken) {
+      clearInterval(queueInterval);
+       peopleInfront.textContent = "Done";
+      estimatedTime.textContent = "Completed";
+      showToast("🎉 It's your turn! Please proceed to the counter.");
+    }
+  }, 4000);
+}
+
 // Load saved theme
 window.addEventListener("DOMContentLoaded", () => {
   const savedTheme = localStorage.getItem("theme");
 
   if (savedTheme === "light") {
     document.body.classList.add("light");
+  }
+
+  const savedToken = localStorage.getItem("tokenData");
+  if (savedToken) {
+    const tokenData = JSON.parse(savedToken);
+    yourToken.textContent = tokenData.token;
+    estimatedTime.textContent = tokenData.wait;
+    const tokenNumber = Number(tokenData.token.split("-")[1]);
+
+    const peopleAhead = tokenNumber - nowServing;
+
+    const waitTime = peopleAhead * 2;
+
+    servingNow.textContent = `H-${String(nowServing).padStart(3, "0")}`;
+
+    estimatedTime.textContent = `${waitTime} mins`;
   }
 });
 
@@ -151,21 +207,32 @@ generateButton.addEventListener("click", () => {
   let waitTime;
   if (serviceVal === "Bank") {
     tokenPrefix = "B";
-    waitTime = "10 mins";
   } else if (serviceVal === "Government Office") {
     tokenPrefix = "G";
-    waitTime = "31 mins";
   } else if (serviceVal === "Hospital") {
     tokenPrefix = "H";
-    waitTime = "20 mins";
   } else if (serviceVal === "Customer Support") {
     tokenPrefix = "S";
-    waitTime = "10 mins";
   }
 
-  let randomNum = Math.floor(Math.random() * 999 + 1);
+  let randomNum = Math.floor(Math.random() * 81) + 20;
   let formattedNum = String(randomNum).padStart(3, "0");
   let finalToken = tokenPrefix + "-" + formattedNum;
+  // hero card changes
+  const tokenNumber = Number(finalToken.split("-")[1]);
+  let peopleAhead = Math.max(0, tokenNumber - nowServing);
+  currentToken = tokenNumber;
+
+  let liveWait = peopleAhead * 2;
+  if (liveWait >= 25) {
+    liveWait = `40 mins+`
+  }
+
+  yourToken.textContent = finalToken;
+  estimatedTime.textContent = liveWait;
+
+  servingNow.textContent = `H-${String(nowServing).padStart(3, "0")}`;
+  peopleInfront.textContent = peopleAhead;
 
   tokenResult.innerHTML = `<div class="result-header">
         <i class="fa-regular fa-circle-check"></i>
@@ -188,9 +255,13 @@ generateButton.addEventListener("click", () => {
           <span>Token Number:</span>
           <h4>${finalToken}</h4>
         </div>
+        <div>
+          <span>People Ahead:</span>
+          <h4>${peopleAhead}</h4>
+        </div>
         <div class="last-div">
           <span>Estimated Wait Time:</span>
-          <h4>${waitTime}</h4>
+          <h4>${liveWait}</h4>
         </div>
       </div>
     </div>
@@ -240,9 +311,23 @@ generateButton.addEventListener("click", () => {
       ease: "back.out(1.7)",
     },
   );
+  // token Data
+  let tokenData = {
+    name,
+    service: serviceVal,
+    phone: phoneNo,
+    wait: liveWait,
+    token: finalToken,
+  };
+  console.log(tokenData);
+  // Local Storage
+  localStorage.setItem("tokenData", JSON.stringify(tokenData));
+
   serviceDropDown.value = "";
   userName.value = "";
   userPhone.value = "";
+
+  startQueueSimulation();
 });
 
 // Token Modal Opening/Closing code...
@@ -384,28 +469,26 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       const aboutTl = gsap.timeline({
-      scrollTrigger: {
-        trigger: ".aboutS",
-        containerAnimation: horizontalScroll,
-        start: "left 60%",
-      },
-    });
+        scrollTrigger: {
+          trigger: ".aboutS",
+          containerAnimation: horizontalScroll,
+          start: "left 60%",
+        },
+      });
 
-    // ABOUT animation (desktop/tablet only)
-    aboutTl.from(".about-heading", { y: 50, opacity: 0, duration: 0.8 });
-    aboutTl.from(".about-left", { x: -200, opacity: 0, duration: 0.7 });
-    aboutTl.from(".about-intro", { y: 50, opacity: 0, duration: 0.5 });
-    aboutTl.from(".about-right", { x: 100, opacity: 0, duration: 0.7 });
+      // ABOUT animation (desktop/tablet only)
+      aboutTl.from(".about-heading", { y: 50, opacity: 0, duration: 0.8 });
+      aboutTl.from(".about-left", { x: -200, opacity: 0, duration: 0.7 });
+      aboutTl.from(".about-intro", { y: 50, opacity: 0, duration: 0.5 });
+      aboutTl.from(".about-right", { x: 100, opacity: 0, duration: 0.7 });
 
-    return () => {
-      horizontalScroll.kill();
-    };
+      return () => {
+        horizontalScroll.kill();
+      };
 
       return () => horizontalScroll.kill();
     });
-
-
-  };
+  }
 
   // other animations after scrll trigger
   gsap.to(".queue-card", {
