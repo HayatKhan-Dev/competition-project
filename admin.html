@@ -21,8 +21,13 @@
         <span>Admin Panel</span>
       </div>
       <div class="header-center">
-        <input type="text" class="search-input" placeholder="Search-token..." />
-        <i class="fa-solid fa-angle-right enter"></i>
+        <input
+          type="text"
+          class="search-input"
+          id="adminSearch"
+          placeholder="Search-token..."
+        />
+        <i class="fa-solid fa-angle-right enter" id="enterSearch"></i>
       </div>
       <div class="header-right">
         <div class="admin-info">
@@ -30,7 +35,7 @@
           <i class="fa-solid fa-user"></i>
         </div>
         <div class="btn-container">
-          <button class="logout-btn">Logout</button>
+          <button class="logout-btn" id="logoutBtn">Logout</button>
           <div class="animation"></div>
         </div>
       </div>
@@ -43,7 +48,7 @@
             <i class="fa-solid fa-ticket"></i>
           </div>
           <div class="card-info">
-            <h2>245</h2>
+            <h2 id="totalTokens">245</h2>
             <p>Total Tokens</p>
           </div>
         </div>
@@ -53,7 +58,7 @@
             <i class="fa-solid fa-clock"></i>
           </div>
           <div class="card-info">
-            <h2>18</h2>
+            <h2 id="activeQueues">18</h2>
             <p>Active Queues</p>
           </div>
         </div>
@@ -63,7 +68,7 @@
             <i class="fa-solid fa-circle-check"></i>
           </div>
           <div class="card-info">
-            <h2>129</h2>
+            <h2 id="completedToday">129</h2>
             <p>Completed Today</p>
           </div>
         </div>
@@ -73,7 +78,7 @@
             <i class="fa-solid fa-users"></i>
           </div>
           <div class="card-info">
-            <h2>42</h2>
+            <h2 id="waitingUsers">42</h2>
             <p>Waiting Users</p>
           </div>
         </div>
@@ -93,7 +98,7 @@
               </tr>
             </thead>
 
-            <tbody>
+            <tbody id="tbody">
               <tr>
                 <td>B-021</td>
                 <td>Bank</td>
@@ -121,7 +126,7 @@
           </table>
         </div>
 
-        <div class="admin-activity-panel">
+        <div class="admin-activity-panel" id="recent-acitivity">
           <div class="section-header">
             <h2>Recent Activity</h2>
           </div>
@@ -147,100 +152,59 @@
           </div>
         </div>
       </div>
-      <div class="queue-overview">
-        <div class="overview-card">
-          <div class="overview-header">
-            <h3>Bank Queue</h3>
-            <span>15 Waiting</span>
-          </div>
-
-          <div class="admin-progress-bar">
-            <div class="admin-progress-fill bank-fill"></div>
-          </div>
-        </div>
-
-        <div class="overview-card">
-          <div class="overview-header">
-            <h3>Hospital Queue</h3>
-            <span>8 Waiting</span>
-          </div>
-
-          <div class="admin-progress-bar">
-            <div class="admin-progress-fill hospital-fill"></div>
-          </div>
-        </div>
-
-        <div class="overview-card">
-          <div class="overview-header">
-            <h3>Government Office</h3>
-            <span>23 Waiting</span>
-          </div>
-
-          <div class="admin-progress-bar">
-            <div class="admin-progress-fill gov-fill"></div>
-          </div>
-        </div>
-
-        <div class="overview-card">
-          <div class="overview-header">
-            <h3>Customer Support</h3>
-            <span>5 Waiting</span>
-          </div>
-
-          <div class="admin-progress-bar">
-            <div class="admin-progress-fill support-fill"></div>
-          </div>
-        </div>
-      </div>
       <div class="quick-actions">
-        <button>
+        <button id="skipTokenBtn">
           <i class="fa-solid fa-plus"></i>
-          Generate Token
+          Skip Token
         </button>
 
-        <button>
+        <button id="next-btn">
           <i class="fa-solid fa-chart-line"></i>
-          View Reports
+          Next Token
         </button>
 
-        <button>
+        <button id="resetQueueBtn">
           <i class="fa-solid fa-users"></i>
-          Add Queue
+          Reset Queue
         </button>
 
-        <button>
+        <button id="notify-btn">
           <i class="fa-solid fa-bell"></i>
           Notify Users
         </button>
       </div>
       <div class="queue-status">
-        <div class="status-card">
-          <h3>Bank Queue</h3>
-          <span class="live-indicator">Live</span>
+        <div class="queue-selector">
+          <button class="queue-tab active" data-queue="Bank">
+            <i class="fa-solid fa-building-columns"></i>
+            Bank
+          </button>
 
-          <div class="status-info">
-            <p>Current Token</p>
-            <h2>B-034</h2>
-          </div>
+          <button class="queue-tab" data-queue="Hospital">
+            <i class="fa-solid fa-hospital"></i>
+            Hospital
+          </button>
 
-          <div class="status-info">
-            <p>Next Token</p>
-            <h2>B-035</h2>
-          </div>
+          <button class="queue-tab" data-queue="Government Office">
+            <i class="fa-solid fa-landmark"></i>
+            Government
+          </button>
+
+          <button class="queue-tab" data-queue="Customer Support">
+            <i class="fa-solid fa-headset"></i>
+            Support
+          </button>
         </div>
-
         <div class="status-card">
-          <h3>Hospital Queue</h3>
-          <span class="live-indicator">Live</span>
-
+          <span class="live-indicator"> ● Live </span>
+          <h3 id="queueTitle">Bank Queue</h3>
           <div class="status-info">
             <p>Current Token</p>
-            <h2>H-021</h2>
+            <h2 id="currentToken">B-021</h2>
           </div>
-
           <div class="status-info">
             <p>Next Token</p>
-            <h2>H-022</h2>
+            <h2 id="nextToken">B-022</h2>
           </div>
         </div>
       </div>
@@ -316,5 +280,87 @@
         </div>
       </div>
     </footer>
+
+    <div class="notify-overlay">
+      <div class="notify-modal">
+        <button class="close-notify-btn">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <h2>Send Notification</h2>
+
+        <select id="notificationType">
+          <option value="Info">Info</option>
+          <option value="Warning">Warning</option>
+          <option value="Emergency">Emergency</option>
+        </select>
+
+        <textarea
+          id="notificationMessage"
+          placeholder="Write your notification..."
+        ></textarea>
+
+        <button id="sendNotificationBtn">Send Notification</button>
+      </div>
+    </div>
+
+    <!-- token report card modal -->
+    <div class="search-result-overlay" id="searchOverlay">
+      <div class="search-result-card" id="searchCard">
+        <div class="search-header">
+          <i class="fa-solid fa-circle-check"></i>
+          <h2>Token Found</h2>
+        </div>
+
+        <div class="search-body">
+          <div class="search-row">
+            <span>Token</span>
+            <strong id="searchToken"></strong>
+          </div>
+
+          <div class="search-row">
+            <span>Name</span>
+            <strong id="searchName"></strong>
+          </div>
+
+          <div class="search-row">
+            <span>Phone</span>
+            <strong id="searchPhone"></strong>
+          </div>
+
+          <div class="search-row">
+            <span>Queue</span>
+            <strong id="searchQueue"></strong>
+          </div>
+
+          <div class="search-row">
+            <span>Status</span>
+            <strong id="searchStatus"></strong>
+          </div>
+        </div>
+
+        <button id="closeSearchCard">Close</button>
+      </div>
+    </div>
+
+    <!-- logout code -->
+    <div class="logout-overlay" id="logoutOverlay">
+      <div class="logout-box">
+        <div class="logout-loader"></div>
+
+        <h2>Logging Out...</h2>
+
+        <p>Please wait</p>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"
+      integrity="sha512-P2IDYZfqSwjcSjX0BKeNhwRUH8zRPGlgcWl5n6gBLzdi4Y5/0O4zaXrtO4K9TZK6Hn1BenYpKowuCavNandERg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="admin.js"></script>
   </body>
 </html>

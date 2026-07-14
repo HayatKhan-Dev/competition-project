@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QueueX - User Dashboard</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="user-dashboard.css" />
+  </head>
+  <body>
+    <div class="dashboard-header">
+      <div class="container">
+        <nav class="dashboard-navbar">
+          <!-- Logo -->
+          <a href="index.html" class="dashboard-logo"> Queue<span>X</span> </a>
+
+          <!-- Current Page -->
+          <div class="dashboard-title">
+            <h2>Track Your Queue</h2>
+
+            <p>Live queue updates in real time</p>
+          </div>
+
+          <!-- Action -->
+          <div class="dashboard-actions">
+            <a href="index.html" class="new-token-btn"> Generate New Token </a>
+          </div>
+        </nav>
+      </div>
+    </div>
+
+    <main>
+      <section class="queue-status">
+        <div class="container">
+          <div class="queue-card">
+            <div class="queue-header">
+              <h2 id="queueName">Hospital Queue</h2>
+              <span id="queueStatus"> Waiting </span>
+            </div>
+
+            <div class="queue-grid">
+              <div class="queue-box">
+                <span>Your Token</span>
+                <h3 id="userToken">H-000</h3>
+              </div>
+
+              <div class="queue-box">
+                <span>Now Serving</span>
+                <h3 id="servingToken">H-000</h3>
+              </div>
+
+              <div class="queue-box">
+                <span>People Ahead</span>
+                <h3 id="peopleAhead">0</h3>
+              </div>
+
+              <div class="queue-box">
+                <span>Estimated Wait</span>
+                <h3 id="waitTime">0 mins</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="queue-journey">
+        <div class="container">
+          <div class="journey-card">
+            <div class="journey-heading">
+              <h2>Queue Journey</h2>
+              <p>Your live progress through the queue</p>
+            </div>
+            <div class="journey-track">
+              <div class="journey-step completed" id="stepGenerated">
+                <div class="journey-circle">
+                  <i class="fa-solid fa-check"></i>
+                </div>
+                <h4>Generated</h4>
+              </div>
+              <div class="journey-line" id="line1"></div>
+              <div class="journey-step waiting" id="stepWaiting">
+                <div class="journey-circle">
+                  <i class="fa-solid fa-clock"></i>
+                </div>
+                <h4>Waiting</h4>
+              </div>
+              <div class="journey-line" id="line2"></div>
+              <div class="journey-step serving" id="stepServing">
+                <div class="journey-circle">
+                  <i class="fa-solid fa-user"></i>
+                </div>
+                <h4>Serving</h4>
+              </div>
+
+              <div class="journey-line" id="line3"></div>
+              <div class="journey-step" id="stepCompleted">
+                <div class="journey-circle">
+                  <i class="fa-solid fa-flag-checkered"></i>
+                </div>
+                <h4>Completed</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="dashboard-grid">
+        <div class="live-insights">
+          <h2>Live Insights</h2>
+
+          <div class="insight-card">
+            <h3 id="insightPeople">11</h3>
+
+            <span>People Ahead</span>
+          </div>
+
+          <div class="insight-card">
+            <h3 id="insightWait">22 mins</h3>
+
+            <span>Estimated Wait</span>
+          </div>
+
+          <div class="insight-card">
+            <h3 id="insightPosition">#12</h3>
+
+            <span>Queue Position</span>
+          </div>
+
+          <div class="insight-card">
+            <h3 id="insightStatus">Waiting</h3>
+
+            <span>Status</span>
+          </div>
+        </div>
+
+        <div class="notification-center">
+          <h2>Notifications</h2>
+
+          <div id="notificationContainer">
+            <p>No notifications yet.</p>
+          </div>
+        </div>
+      </section>
+      <section class="queue-information">
+        <h2>Queue Information</h2>
+
+        <div class="info-grid">
+          <div class="info-item">
+            <i class="fa-solid fa-ticket"></i>
+            <p>Keep your token ready before your turn.</p>
+          </div>
+
+          <div class="info-item">
+            <i class="fa-solid fa-clock"></i>
+            <p>Average service time is around 2 minutes.</p>
+          </div>
+
+          <div class="info-item">
+            <i class="fa-solid fa-arrow-rotate-right"></i>
+            <p>The queue updates every 4 seconds.</p>
+          </div>
+
+          <div class="info-item">
+            <i class="fa-solid fa-bell"></i>
+            <p>Admin notifications appear instantly.</p>
+          </div>
+
+          <div class="info-item">
+            <i class="fa-solid fa-circle-check"></i>
+            <p>Completed tokens are removed automatically.</p>
+          </div>
+
+          <div class="info-item">
+            <i class="fa-solid fa-shield-halved"></i>
+            <p>Your queue data stays synchronized in real time.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="user-footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-brand">
+            <h2>Queue<span>X</span></h2>
+
+            <p>
+              Smart Digital Queue Management System built to reduce waiting time
+              and provide a seamless queue experience.
+            </p>
+          </div>
+
+          <div class="footer-links">
+            <a href="index.html">
+              <i class="fa-solid fa-house"></i>
+              Home
+            </a>
+
+            <a href="#">
+              <i class="fa-solid fa-chart-line"></i>
+              Queue Status
+            </a>
+
+            <a href="#">
+              <i class="fa-solid fa-circle-info"></i>
+              Support
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>
+            © 2026 QueueX • Designed & Developed by
+            <strong>Hayat Khan</strong>
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="user-dashboard.js"></script>
+  </body>
+</html>

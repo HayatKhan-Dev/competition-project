@@ -5,39 +5,93 @@ const servingNow = document.getElementById("serving-now");
 const yourToken = document.getElementById("your-token");
 const estimatedTime = document.getElementById("estimated-time");
 let peopleInfront = document.getElementById("peopleAhead");
-let nowServing = 21;
+let currentPrefix = "H";
 
 let currentToken = null;
 let queueInterval;
+let activeQueue = "";
 const toast = document.getElementById("toast");
 
-function showToast(message){
-    toast.textContent = message;
-    toast.classList.add("show");
-    setTimeout(()=>{
-        toast.classList.remove("show");
-    },5000);
+function showToast(message) {
+  toast.textContent = message;
+  toast.classList.add("show");
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 5000);
 }
 
-function startQueueSimulation () {
+// admin notification logic
+let lastNotificationId = null;
+
+function checkNotifications() {
+  const queueData = getQueueData();
+  if (!queueData.notifications || queueData.notifications.length === 0) return;
+  const latest = queueData.notifications[queueData.notifications.length - 1];
+
+  if (latest.id !== lastNotificationId) {
+    lastNotificationId = latest.id;
+    showToast(`📢 ${latest.message}`);
+  }
+}
+
+function startQueueSimulation(queueName) {
   clearInterval(queueInterval);
   queueInterval = setInterval(() => {
-    nowServing++;
-    servingNow.textContent = `H-${String(nowServing).padStart(3, "0")}`;
-    peopleAhead = Math.max(0, currentToken - nowServing);
+    const queueData = getQueueData();
+    // Fix old localStorage structure
+    if (!queueData.totalTokens || typeof queueData.totalTokens !== "object") {
+      queueData.totalTokens = {
+        Bank: 0,
+        Hospital: 0,
+        "Government Office": 0,
+        "Customer Support": 0,
+      };
+    }
+
+    if (!queueData.waiting || typeof queueData.waiting !== "object") {
+      queueData.waiting = {
+        Bank: 0,
+        Hospital: 0,
+        "Government Office": 0,
+        "Customer Support": 0,
+      };
+    }
+
+    if (!queueData.completed || typeof queueData.completed !== "object") {
+      queueData.completed = {
+        Bank: 0,
+        Hospital: 0,
+        "Government Office": 0,
+        "Customer Support": 0,
+      };
+    }
+
+    if (!queueData.nowServing || typeof queueData.nowServing !== "object") {
+      queueData.nowServing = {
+        Bank: 21,
+        Hospital: 21,
+        "Government Office": 21,
+        "Customer Support": 21,
+      };
+    }
+
+    queueData.nowServing[queueName]++;
+    saveQueueData(queueData);
+    const servingNumber = queueData.nowServing[queueName];
+    servingNow.textContent = `${currentPrefix}-${String(servingNumber).padStart(3, "0")}`;
+    const peopleAhead = Math.max(0, currentToken - servingNumber);
     peopleInfront.textContent = peopleAhead;
-    let liveWait = peopleAhead * 2;
-    if (liveWait >= 25) {
-    estimatedTime.textContent = "40 mins+";
-    } else {
-        estimatedTime.textContent = `${liveWait} mins`;
-    }
-    if (nowServing == currentToken) {
+    const wait = peopleAhead >= 20 ? "40 mins+" : `${peopleAhead * 2} mins`;
+
+    estimatedTime.textContent = wait;
+
+    if (servingNumber >= currentToken) {
       clearInterval(queueInterval);
-       peopleInfront.textContent = "Done";
+      peopleInfront.textContent = "Done";
       estimatedTime.textContent = "Completed";
-      showToast("🎉 It's your turn! Please proceed to the counter.");
+      showToast("🎉 It's your turn!");
     }
+    localStorage.setItem("adminUpdate", Date.now());
   }, 4000);
 }
 
@@ -55,15 +109,29 @@ window.addEventListener("DOMContentLoaded", () => {
     yourToken.textContent = tokenData.token;
     estimatedTime.textContent = tokenData.wait;
     const tokenNumber = Number(tokenData.token.split("-")[1]);
+    currentToken = tokenNumber;
+    // activeQueue = queueName;
+    const queueData = getQueueData();
 
-    const peopleAhead = tokenNumber - nowServing;
+    const serviceMap = {
+      B: "Bank",
+      H: "Hospital",
+      G: "Government Office",
+      S: "Customer Support",
+    };
+    const prefix = tokenData.token.split("-")[0];
+    const queueName = serviceMap[prefix];
+    const servingNumber = queueData.nowServing[queueName];
+    const peopleAhead = Math.max(0, tokenNumber - servingNumber);
 
     const waitTime = peopleAhead * 2;
-
-    servingNow.textContent = `H-${String(nowServing).padStart(3, "0")}`;
-
+    peopleInfront.textContent = peopleAhead;
+    currentPrefix = prefix;
+    // servingNow.textContent = `${currentPrefix}-${String(nowServing).padStart(3, "0")}`;
     estimatedTime.textContent = `${waitTime} mins`;
+    servingNow.textContent = `${prefix}-${String(servingNumber).padStart(3, "0")}`;
   }
+  checkNotifications();
 });
 
 // Toggle theme
@@ -183,6 +251,73 @@ chatInput.addEventListener("keydown", (e) => {
   }
 });
 
+// queue data
+
+function getQueueData() {
+  return (
+    JSON.parse(localStorage.getItem("queueData")) || {
+      selectedQueue: "Bank",
+      nowServing: {
+        Bank: 21,
+        Hospital: 21,
+        "Government Office": 21,
+        "Customer Support": 21,
+      },
+      lastToken: {
+        Bank: 21,
+        Hospital: 21,
+        "Government Office": 21,
+        "Customer Support": 21,
+      },
+      waiting: {
+        Bank: 0,
+        Hospital: 0,
+        "Government Office": 0,
+        "Customer Support": 0,
+      },
+      completed: {
+        Bank: 0,
+        Hospital: 0,
+        "Government Office": 0,
+        "Customer Support": 0,
+      },
+      totalTokens: {
+        Bank: 0,
+        Hospital: 0,
+        "Government Office": 0,
+        "Customer Support": 0,
+      },
+      tokens: [],
+      recentActivity: [],
+      notifications: [],
+    }
+  );
+}
+
+function saveQueueData(queueData) {
+  localStorage.setItem("queueData", JSON.stringify(queueData));
+}
+
+function updateJoinButton() {
+  const joinQueueBtn = document.querySelector(".join-btn");
+
+  if (!joinQueueBtn) return;
+
+  const hasToken = localStorage.getItem("hasActiveToken");
+
+  if (hasToken === "true") {
+    joinQueueBtn.textContent = "Track Your Token";
+
+    joinQueueBtn.onclick = () => {
+      window.location.href = "user-dashboard.html";
+    };
+  } else {
+    joinQueueBtn.textContent = "Join Queue";
+
+    joinQueueBtn.onclick = openModal;
+  }
+}
+
 // Token Modal
 const serviceDropDown = document.getElementById("service");
 const userName = document.getElementById("name-input");
@@ -203,35 +338,39 @@ generateButton.addEventListener("click", () => {
   if (name === "") return userName.classList.add("error");
   if (phoneNo === "") return userPhone.classList.add("error");
 
-  let tokenPrefix;
-  let waitTime;
-  if (serviceVal === "Bank") {
-    tokenPrefix = "B";
-  } else if (serviceVal === "Government Office") {
-    tokenPrefix = "G";
-  } else if (serviceVal === "Hospital") {
-    tokenPrefix = "H";
-  } else if (serviceVal === "Customer Support") {
-    tokenPrefix = "S";
-  }
+  const servicePrefixes = {
+    Bank: "B",
+    Hospital: "H",
+    "Government Office": "G",
+    "Customer Support": "S",
+  };
 
-  let randomNum = Math.floor(Math.random() * 81) + 20;
-  let formattedNum = String(randomNum).padStart(3, "0");
-  let finalToken = tokenPrefix + "-" + formattedNum;
+  const tokenPrefix = servicePrefixes[serviceVal];
+  currentPrefix = tokenPrefix;
+  const currentQueue = serviceVal;
+  console.log("Current Queue:", currentQueue);
+  console.log("Prefix:", currentPrefix);
+  activeQueue = currentQueue;
+
+  const queueData = getQueueData();
+  const tokenNumber = Math.floor(Math.random() * 80) + 20;
+  const finalToken = `${tokenPrefix}-${String(tokenNumber).padStart(3, "0")}`;
+
   // hero card changes
-  const tokenNumber = Number(finalToken.split("-")[1]);
-  let peopleAhead = Math.max(0, tokenNumber - nowServing);
+  // const tokenNumber = Number(finalToken.split("-")[1]);
+  const servingNumber = queueData.nowServing[currentQueue];
+  let peopleAhead = Math.max(0, tokenNumber - servingNumber);
   currentToken = tokenNumber;
 
   let liveWait = peopleAhead * 2;
   if (liveWait >= 25) {
-    liveWait = `40 mins+`
+    liveWait = `40 mins+`;
   }
 
   yourToken.textContent = finalToken;
   estimatedTime.textContent = liveWait;
 
-  servingNow.textContent = `H-${String(nowServing).padStart(3, "0")}`;
+  servingNow.textContent = `${currentPrefix}-${String(servingNumber).padStart(3, "0")}`;
   peopleInfront.textContent = peopleAhead;
 
   tokenResult.innerHTML = `<div class="result-header">
@@ -315,6 +454,7 @@ generateButton.addEventListener("click", () => {
   let tokenData = {
     name,
     service: serviceVal,
+    queue: currentQueue,
     phone: phoneNo,
     wait: liveWait,
     token: finalToken,
@@ -322,12 +462,41 @@ generateButton.addEventListener("click", () => {
   console.log(tokenData);
   // Local Storage
   localStorage.setItem("tokenData", JSON.stringify(tokenData));
+  localStorage.setItem("hasActiveToken", "true");
+  updateJoinButton();
+  // Add token to shared Queue Data
+  queueData.tokens = queueData.tokens || [];
+  queueData.recentActivity = queueData.recentActivity || [];
+  queueData.notifications = queueData.notifications || [];
+
+  queueData.tokens.push({
+    token: finalToken,
+    queue: currentQueue,
+    service: serviceVal,
+    name,
+    phone: phoneNo,
+    status: "Waiting",
+  });
+
+  queueData.recentActivity.unshift({
+    icon: "fa-solid fa-circle-plus",
+    message: `${name} generated ${finalToken}`,
+  });
+
+  queueData.recentActivity = queueData.recentActivity.slice(0, 4);
+
+  queueData.totalTokens[currentQueue]++;
+  queueData.waiting[currentQueue]++;
+  queueData.selectedQueue = currentQueue;
+  queueData.recentActivity.unshift(`New Token Generated : ${finalToken}`);
+
+  saveQueueData(queueData);
 
   serviceDropDown.value = "";
   userName.value = "";
   userPhone.value = "";
 
-  startQueueSimulation();
+  startQueueSimulation(currentQueue);
 });
 
 // Token Modal Opening/Closing code...
@@ -551,4 +720,19 @@ document.addEventListener("DOMContentLoaded", () => {
     opacity: 0,
     duration: 0.5,
   });
+  updateJoinButton();
+});
+
+window.addEventListener("storage", () => {
+  const queueData = getQueueData();
+  const queueName = activeQueue;
+  if (queueName) {
+    const servingNumber = queueData.nowServing[queueName];
+    servingNow.textContent = `${currentPrefix}-${String(servingNumber).padStart(3, "0")}`;
+    const peopleAhead = Math.max(0, currentToken - servingNumber);
+    peopleInfront.textContent = peopleAhead;
+    estimatedTime.textContent =
+      peopleAhead >= 20 ? "40 mins+" : `${peopleAhead * 2} mins`;
+  }
+  checkNotifications();
 });
